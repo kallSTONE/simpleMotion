@@ -299,9 +299,7 @@ function AuthScreen({
           </div>
         </div>
         <div className="space-y-2">
-          <h1 className="text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-white/50">
-            Mero
-          </h1>
+          <img className="w-32 h-32 mx-auto" src="/images/icon/logo.png" alt="simply ai task pri logo" />
           <p className="text-white/40 text-lg">AI-Optimized Task Planning</p>
         </div>
         <button
