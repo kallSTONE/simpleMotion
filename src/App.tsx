@@ -56,6 +56,7 @@ import { CSS } from '@dnd-kit/utilities';
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [authError, setAuthError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'goals' | 'tasks' | 'planner' | 'schedules'>('planner');
   
   const [goals, setGoals] = useState<Goal[]>([]);
@@ -104,7 +105,14 @@ export default function App() {
     </div>
   );
 
-  if (!user) return <AuthScreen />;
+  if (!user) return <AuthScreen error={authError} onSignIn={async () => {
+    setAuthError(null);
+    try {
+      await signIn();
+    } catch (error: any) {
+      setAuthError(error?.message || 'Google sign-in failed. Check Firebase Auth domain and provider settings.');
+    }
+  }} />;
 
   return (
     <div className="h-screen flex bg-zinc-950 text-zinc-300 font-sans overflow-hidden">
@@ -267,7 +275,13 @@ function NavItem({ active, onClick, label }: { active: boolean, onClick: () => v
   );
 }
 
-function AuthScreen() {
+function AuthScreen({
+  error,
+  onSignIn,
+}: {
+  error: string | null;
+  onSignIn: () => void | Promise<void>;
+}) {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#030303] overflow-hidden relative">
       {/* Background Blobs */}
@@ -291,12 +305,17 @@ function AuthScreen() {
           <p className="text-white/40 text-lg">AI-Optimized Task Planning</p>
         </div>
         <button
-          onClick={signIn}
+          onClick={onSignIn}
           className="px-8 py-4 bg-white text-black font-semibold rounded-full hover:bg-white/90 transition-all flex items-center space-x-3 mx-auto group"
         >
           <span>Continue with Google</span>
           <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
         </button>
+        {error && (
+          <p className="max-w-md mx-auto text-sm text-red-300/90 bg-red-500/10 border border-red-500/20 rounded-2xl px-4 py-3">
+            {error}
+          </p>
+        )}
       </motion.div>
     </div>
   );
