@@ -119,9 +119,7 @@ export default function App() {
       {/* Sidebar */}
       <aside className="w-64 border-r border-zinc-800 bg-zinc-900/50 flex flex-col p-6 shrink-0 h-full">
         <div className="flex items-center space-x-3 mb-10">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-            <Sparkles className="w-5 h-5 text-white" />
-          </div>
+          <img className="w-32 h-32 mx-auto" src="/images/icon/logo.png" alt="simply ai task pri logo" />
           <span className="text-xl font-semibold tracking-tight text-white">Mero</span>
         </div>
 
@@ -293,10 +291,7 @@ function AuthScreen({
         animate={{ opacity: 1, y: 0 }}
         className="text-center space-y-8 relative z-10"
       >
-        <div className="flex justify-center">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-600 flex items-center justify-center shadow-2xl shadow-indigo-500/20">
-            <Sparkles className="w-10 h-10 text-white" />
-          </div>
+        <div className="flex justify-center">          
         </div>
         <div className="space-y-2">
           <img className="w-32 h-32 mx-auto" src="/images/icon/logo.png" alt="simply ai task pri logo" />
@@ -576,7 +571,7 @@ function PlannerView({ user, goals, tasks, onPlanCreated }: { user: User, goals:
           <div className="relative z-10 flex flex-col items-center justify-center h-full text-center space-y-10">
             <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-indigo-500/20 to-violet-600/20 border border-indigo-500/30 flex items-center justify-center shadow-2xl shadow-indigo-500/10 relative group">
               <div className="absolute inset-0 bg-indigo-500/10 blur-xl group-hover:bg-indigo-500/20 transition-all rounded-3xl" />
-              <Sparkles className="w-12 h-12 text-indigo-400 group-hover:scale-110 transition-transform relative z-10" />
+              <img className="w-32 h-32 mx-auto" src="/images/icon/logo.png" alt="simply ai task pri logo" />
             </div>
             
             <div className="space-y-3 max-w-sm">
