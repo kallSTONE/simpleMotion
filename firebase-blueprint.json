@@ -1,0 +1,73 @@
+{
+  "entities": {
+    "Goal": {
+      "title": "Goal",
+      "description": "A personal goal defined by the user.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "The UID of the user who owns this goal." },
+        "title": { "type": "string", "description": "The name of the goal." },
+        "description": { "type": "string", "description": "Optional details about the goal." },
+        "color": { "type": "string", "description": "Hex color code for visual identification." },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "createdAt"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "An independent task that can be part of a plan.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "The UID of the user." },
+        "content": { "type": "string", "description": "The task description text." },
+        "completed": { "type": "boolean", "description": "Whether the task is done." },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "content", "completed", "createdAt"]
+    },
+    "Schedule": {
+      "title": "Schedule",
+      "description": "An AI-generated or user-refined task plan for a specific period.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "The UID of the user." },
+        "title": { "type": "string", "description": "Title of the plan (e.g., 'Daily Plan - April 26')." },
+        "timeRange": { "type": "string", "enum": ["day", "week", "custom"], "description": "The period covered by this schedule." },
+        "startDate": { "type": "string", "format": "date-time" },
+        "goalIds": { "type": "array", "items": { "type": "string" }, "description": "IDs of goals prioritized for this plan." },
+        "tasks": { "type": "array", "items": { "$ref": "#/entities/ScheduledTask" }, "description": "The ordered list of tasks for this schedule." },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "timeRange", "startDate", "tasks", "createdAt", "updatedAt"]
+    },
+    "ScheduledTask": {
+      "title": "ScheduledTask",
+      "description": "A task within a specific schedule.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique ID for this task instance." },
+        "content": { "type": "string", "description": "Task description." },
+        "isAiGenerated": { "type": "boolean", "description": "Whether this task was added by the AI." },
+        "priority": { "type": "string", "enum": ["low", "medium", "high"] },
+        "completed": { "type": "boolean" },
+        "goalAlignment": { "type": "string", "description": "Optional ID of a goal this task aligns with." }
+      },
+      "required": ["id", "content", "isAiGenerated", "priority", "completed"]
+    }
+  },
+  "firestore": {
+    "goals/{goalId}": {
+      "schema": "Goal",
+      "description": "Collection of user goals."
+    },
+    "tasks/{taskId}": {
+      "schema": "Task",
+      "description": "Collection of independent user tasks (inbox)."
+    },
+    "schedules/{scheduleId}": {
+      "schema": "Schedule",
+      "description": "Collection of saved schedules/plans."
+    }
+  }
+}
